@@ -1,104 +1,61 @@
-<!-- ========== HERO avec photo ========== -->
-<header class="hero">
-  <div class="container text-center hero-content">
-    <span class="hero-tag">Édition 2026</span>
-    <h1 class="hero-title">Nos conférences</h1>
-    <p class="hero-sub">Rencontrez des experts, apprenez par la pratique et réservez votre place dès maintenant.</p>
-    <div class="hero-pills">
-      <span class="pill pill-amber"><i class="bi bi-mic-fill"></i> Experts invités</span>
-      <span class="pill pill-teal"><i class="bi bi-people-fill"></i> Places limitées</span>
-      <span class="pill pill-coral"><i class="bi bi-lightning-charge-fill"></i> Ateliers pratiques</span>
-    </div>
-  </div>
-</header>
-
-<!-- ========== CONFÉRENCES ========== -->
-<section class="container conf-section">
-  <div class="row g-4">
-    @for (conf of conferences; track conf.id) {
-      <div class="col-12 col-md-6 col-lg-4">
-        <article class="conf-card h-100">
-
-          <div class="conf-media">
-            <img [src]="conf.image" [alt]="conf.title" class="conf-img" loading="lazy">
-            <div class="conf-date">
-              <span class="conf-day">{{ conf.date | date: 'dd' }}</span>
-              <span class="conf-month">{{ conf.date | date: 'MMM' }}</span>
-            </div>
-            @if (conf.available === 0) {
-              <span class="conf-ribbon">Complet</span>
-            }
-          </div>
-
-          <div class="conf-body">
-            <h5 class="conf-title">{{ conf.title }}</h5>
-
-            <ul class="conf-info list-unstyled">
-              <li>
-                <span class="info-icon bg-violet"><i class="bi bi-clock-fill"></i></span>
-                {{ conf.date | date: 'dd/MM/yyyy à HH:mm' }}
-              </li>
-              <li>
-                <span class="info-icon bg-coral"><i class="bi bi-geo-alt-fill"></i></span>
-                {{ conf.address }}
-              </li>
-            </ul>
-
-            <p class="conf-desc">{{ conf.description }}</p>
-
-            <div class="conf-footer">
-              @if (conf.available > 10) {
-                <span class="seats seats-ok"><i class="bi bi-ticket-perforated-fill"></i> {{ conf.available }} places</span>
-                <button class="btn btn-reserve">Réserver</button>
-              } @else if (conf.available > 0) {
-                <span class="seats seats-low"><i class="bi bi-exclamation-triangle-fill"></i> Plus que {{ conf.available }} !</span>
-                <button class="btn btn-reserve">Réserver</button>
-              } @else {
-                <span class="seats seats-out"><i class="bi bi-x-circle-fill"></i> Complet</span>
-                <button class="btn btn-reserve" disabled>Réserver</button>
-              }
-            </div>
-          </div>
-
-        </article>
-      </div>
-    }
-  </div>
-</section>
-
-<!-- ========== INTERVENANTS ========== -->
-<section class="band band-soft">
-  <div class="container">
-    <h2 class="section-title text-center">Nos intervenants</h2>
-    <p class="section-sub text-center">Des professionnels passionnés, prêts à partager leur expérience.</p>
-
-    <div class="row g-4 justify-content-center">
-      @for (s of speakers; track s.name) {
-        <div class="col-6 col-md-3">
-          <div class="speaker text-center">
-            <div class="speaker-ring" [style.--ring]="s.color">
-              <img [src]="s.photo" [alt]="s.name" class="speaker-photo" loading="lazy">
-            </div>
-            <h6 class="speaker-name">{{ s.name }}</h6>
-            <span class="speaker-role">{{ s.role }}</span>
-          </div>
+<main>
+  <section class="hero" id="accueil">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow"><span class="eyebrow-dot"></span> Le rendez-vous tech en Tunisie</span>
+        <h1>Les idées qui font <span>avancer</span> le numérique.</h1>
+        <p>Une série de conférences pour apprendre, échanger et construire les technologies de demain avec celles et ceux qui les font.</p>
+        <div class="hero-actions">
+          <a class="primary-action" href="#conferences">Découvrir le programme <span aria-hidden="true">→</span></a>
+          <a class="text-action" href="#contact">Nous contacter</a>
         </div>
-      }
+        <div class="hero-proof"><div class="avatar-stack" aria-hidden="true"><span>+</span><span>+</span><span>+</span></div><span><strong>Une communauté engagée</strong><br>experts, équipes et passionnés</span></div>
+      </div>
+      <div class="hero-visual" role="img" aria-label="Participants réunis lors d’une conférence technologique">
+        <div class="visual-note"><span class="note-kicker">PROCHAINE RENCONTRE</span><strong>10 <small>DÉC</small></strong><span>Cloud Native & DevOps</span><span class="note-place">Tunis · 09:00</span></div>
+        <div class="visual-caption"><span class="live-dot"></span> Saison 2026–2027</div>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ========== GALERIE ========== -->
-<section class="container gallery-section">
-  <h2 class="section-title text-center">Moments forts</h2>
-  <p class="section-sub text-center">Un aperçu de l’ambiance des éditions précédentes.</p>
+  <section class="conference-section" id="conferences">
+    <div class="container">
+      <div class="section-heading">
+        <div><span class="section-kicker">APPRENDRE · PARTAGER · INNOVER</span><h2>Les prochaines conférences</h2></div>
+        <p>Des rencontres à taille humaine, pensées pour repartir avec de nouvelles idées et des contacts utiles.</p>
+      </div>
+      <div class="row g-4">
+        @for (conf of conferences; track conf.id) {
+          <div class="col-12 col-md-6 col-xl-4">
+            <article class="conference-card h-100">
+              <div class="card-picture-wrap">
+                <img class="card-picture" [src]="conf.picture" [alt]="'Illustration : ' + conf.title" loading="lazy">
+                <span class="category-badge">{{ conf.category }}</span>
+                <span class="date-badge">{{ conf.date | date:'dd/MM' }}</span>
+              </div>
+              <div class="card-content">
+                <p class="event-date">{{ conf.date | date:'dd/MM/yyyy à HH:mm' }}</p>
+                <h3>{{ conf.title }}</h3>
+                <p class="card-description">{{ conf.description }}</p>
+                <p class="event-place"><span aria-hidden="true">⌖</span>{{ conf.adress }}</p>
+                <div class="card-bottom">
+                  @if (conf.available_Places > 0) {
+                    <span class="places"><span class="place-dot"></span>{{ conf.available_Places }} places disponibles</span>
+                    <a class="reserve-link" href="#contact" [attr.aria-label]="'Réserver pour ' + conf.title">Réserver <span aria-hidden="true">→</span></a>
+                  } @else {
+                    <span class="places sold-out">Complet</span><span class="reserve-link disabled-link">Complet</span>
+                  }
+                </div>
+              </div>
+            </article>
+          </div>
+        }
+      </div>
+      <div class="program-note"><span aria-hidden="true">✦</span> Le programme est mis à jour régulièrement. D’autres rencontres arrivent bientôt.</div>
+    </div>
+  </section>
 
-  <div class="gallery">
-    @for (g of gallery; track g.seed; let i = $index) {
-      <figure class="gallery-item" [class.tall]="i === 0 || i === 3">
-        <img [src]="'https://picsum.photos/seed/' + g.seed + '/700/700'" [alt]="g.caption" loading="lazy">
-        <figcaption>{{ g.caption }}</figcaption>
-      </figure>
-    }
-  </div>
-</section>
+  <section class="closing-band">
+    <div class="container closing-content"><div><span class="section-kicker">ON SE RETROUVE BIENTÔT ?</span><h2>Faisons avancer les idées ensemble.</h2></div><a href="mailto:contact@techmeet.tn" class="closing-button">Écrivez-nous <span aria-hidden="true">↗</span></a></div>
+  </section>
+</main>
