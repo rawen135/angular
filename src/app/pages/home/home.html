@@ -1,0 +1,104 @@
+<!-- ========== HERO avec photo ========== -->
+<header class="hero">
+  <div class="container text-center hero-content">
+    <span class="hero-tag">Édition 2026</span>
+    <h1 class="hero-title">Nos conférences</h1>
+    <p class="hero-sub">Rencontrez des experts, apprenez par la pratique et réservez votre place dès maintenant.</p>
+    <div class="hero-pills">
+      <span class="pill pill-amber"><i class="bi bi-mic-fill"></i> Experts invités</span>
+      <span class="pill pill-teal"><i class="bi bi-people-fill"></i> Places limitées</span>
+      <span class="pill pill-coral"><i class="bi bi-lightning-charge-fill"></i> Ateliers pratiques</span>
+    </div>
+  </div>
+</header>
+
+<!-- ========== CONFÉRENCES ========== -->
+<section class="container conf-section">
+  <div class="row g-4">
+    @for (conf of conferences; track conf.id) {
+      <div class="col-12 col-md-6 col-lg-4">
+        <article class="conf-card h-100">
+
+          <div class="conf-media">
+            <img [src]="conf.image" [alt]="conf.title" class="conf-img" loading="lazy">
+            <div class="conf-date">
+              <span class="conf-day">{{ conf.date | date: 'dd' }}</span>
+              <span class="conf-month">{{ conf.date | date: 'MMM' }}</span>
+            </div>
+            @if (conf.available === 0) {
+              <span class="conf-ribbon">Complet</span>
+            }
+          </div>
+
+          <div class="conf-body">
+            <h5 class="conf-title">{{ conf.title }}</h5>
+
+            <ul class="conf-info list-unstyled">
+              <li>
+                <span class="info-icon bg-violet"><i class="bi bi-clock-fill"></i></span>
+                {{ conf.date | date: 'dd/MM/yyyy à HH:mm' }}
+              </li>
+              <li>
+                <span class="info-icon bg-coral"><i class="bi bi-geo-alt-fill"></i></span>
+                {{ conf.address }}
+              </li>
+            </ul>
+
+            <p class="conf-desc">{{ conf.description }}</p>
+
+            <div class="conf-footer">
+              @if (conf.available > 10) {
+                <span class="seats seats-ok"><i class="bi bi-ticket-perforated-fill"></i> {{ conf.available }} places</span>
+                <button class="btn btn-reserve">Réserver</button>
+              } @else if (conf.available > 0) {
+                <span class="seats seats-low"><i class="bi bi-exclamation-triangle-fill"></i> Plus que {{ conf.available }} !</span>
+                <button class="btn btn-reserve">Réserver</button>
+              } @else {
+                <span class="seats seats-out"><i class="bi bi-x-circle-fill"></i> Complet</span>
+                <button class="btn btn-reserve" disabled>Réserver</button>
+              }
+            </div>
+          </div>
+
+        </article>
+      </div>
+    }
+  </div>
+</section>
+
+<!-- ========== INTERVENANTS ========== -->
+<section class="band band-soft">
+  <div class="container">
+    <h2 class="section-title text-center">Nos intervenants</h2>
+    <p class="section-sub text-center">Des professionnels passionnés, prêts à partager leur expérience.</p>
+
+    <div class="row g-4 justify-content-center">
+      @for (s of speakers; track s.name) {
+        <div class="col-6 col-md-3">
+          <div class="speaker text-center">
+            <div class="speaker-ring" [style.--ring]="s.color">
+              <img [src]="s.photo" [alt]="s.name" class="speaker-photo" loading="lazy">
+            </div>
+            <h6 class="speaker-name">{{ s.name }}</h6>
+            <span class="speaker-role">{{ s.role }}</span>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ========== GALERIE ========== -->
+<section class="container gallery-section">
+  <h2 class="section-title text-center">Moments forts</h2>
+  <p class="section-sub text-center">Un aperçu de l’ambiance des éditions précédentes.</p>
+
+  <div class="gallery">
+    @for (g of gallery; track g.seed; let i = $index) {
+      <figure class="gallery-item" [class.tall]="i === 0 || i === 3">
+        <img [src]="'https://picsum.photos/seed/' + g.seed + '/700/700'" [alt]="g.caption" loading="lazy">
+        <figcaption>{{ g.caption }}</figcaption>
+      </figure>
+    }
+  </div>
+</section>
